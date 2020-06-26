@@ -1,0 +1,27 @@
+{
+  "en" : {
+    "welcome": "Welcome to Mortgage Calculator",
+    "langAsk": "Please enter your language: 'kr' for Korean or 'en' for English",
+    "langError": "Your input is invalid. Please enter a valid input. It must be either of 'kr' for Korean or 'en' for English",
+    "loan": "Please enter your loan amount",
+    "loanError": "Your input is invalid. Please enter a valid number. It must be greater than $0.00 ex) 10000, 12345, or 1235.55",
+    "rate": "Please enter your annual interest rate",
+    "rateError": "Your input is invalid. Please enter a valid number. It must be a positive % value. ex) 0, 5, 5.5, or 0.5",
+    "term": "Please enter your loan term in years",
+    "termError": "Your input is invalid. Please enter a valid number. It must be a positive number with no decimals. ex)5, 12, or 20",
+    "monthlyPayment": "Here is your plan: \nYour loan amount: $%s\nYour rate: annual rate %s%\nYour term: %s years\nYour monthly payment: $%s",
+    "again": "Do you want to perform another loan calculation? Please choose y or n",
+    "againError": "Your input is invalid. Please enter a valid answer. It must be either of 'y' or 'n'"
+    },
+  "kr" : {
+    "loan": "당신이 대출받아야 할 금액을 입력하세요",
+    "loanError": "올바른 입력이 아닙니다. 유효한 숫자를 입력해주세요. $0.00 큰 금액이어야합니다. 예) 10000, 12345, or 1235.55",
+    "rate": "연 이율을 입력해주세요",
+    "rateError": "올바른 입력이 아닙니다. 유효한 숫자를 입력해주세요. 0% 작은 금액은 안됩니다. ex) 0, 5, 5.5, or 0.5",
+    "term": "대출 기간(년)을 입력해주세요",
+    "termError": "올바른 입력이 아닙니다. 유효한 숫자를 입력해주세요. 0보다 이상의 정수여야합니다. ex)5, 12, or 20",
+    "monthlyPayment": "고객님의 견적입니다: \n대출금액: $%s\n연이율: %s%\n대출기한: %s년\n월별지불금액: $%s",
+    "again": "또 다른 모기지 계산을 하시겠습니까? y와 n중 선택해주세요 y or n",
+    "againError": "올바른 입력이 아닙니다. 유효한 답변을 입력해주세요. 'y' 또는 'n'을 선택해주세요"
+  }
+}

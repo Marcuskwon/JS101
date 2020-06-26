@@ -1,0 +1,15 @@
+{
+  "welcome": "Welcome to RPSSL!",
+  "askingBestOf": "Best of how many rounds?",
+  "errorBestOf": "Invalid input. Enter an odd integer greater than 0. ex) '1', '5'",
+  "getUserChoice": "Please choose one: ['rock', 'paper', 'scissors', 'spock', 'lizard']",
+  "errorUserChoice": "Invalid input. Please enter a valid input. ex) 'rock', 'r', or 'scissors'.\nNote: you must type the full name for 'scissors' and 'spock'",
+  "youWon": "You won!",
+  "cpuWon": "Computer won!",
+  "tie": "It is a tie!",
+  "youGrandWinner": "You are the grand winner!",
+  "cpuGrandWinner": "Computer is the grand winner!",
+  "playMore": "Do you want to play more? y / n",
+  "errorPlayMore": "You must select either of 'y' or 'n'"
+  
+}

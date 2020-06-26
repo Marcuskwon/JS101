@@ -1,0 +1,11 @@
+{
+  "welcome": "Welcome to the RPS",
+  "choice": "Please choose one: rock, paper, scissors",
+  "choiceError": "Your choice is not valid. Please choose one: rock, paper, scissors",
+  "choiceDisplay": "Your choice: %s \nComputer choice: %s",
+  "win": "You won! Congratulations!",
+  "lost": "You lost.. Maybe next time",
+  "tie": "It is a tie.",
+  "playAgain": "Do you want to play again? Yes or No",
+  "playAgainError": "Your input is not valid. Please enter 'y' or 'n'"
+}
