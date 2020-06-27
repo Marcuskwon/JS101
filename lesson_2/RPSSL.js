@@ -43,8 +43,7 @@ function isBestOfInvalid(number) {
 }
 
 function isUserChoiceinValid(choice) {
-  return ![].concat.apply([], Object.values(VALID_CHOICES))
-    .includes(choice.toLowerCase());
+  return ![].concat(...Object.values(VALID_CHOICES)).includes(choice.toLowerCase());
 }
 
 function isUserPlayAgainAnswerInvalid (answer) {
