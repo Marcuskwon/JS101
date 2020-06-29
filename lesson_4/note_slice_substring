@@ -1,0 +1,17 @@
+difference betweein .substring(a, b) and .slice(a, b)
+
+They both will return a string with from (index a to the end point b exlucidng b)
+
+let a = 'abcd'
+
+a.slice(1, 3) -> b, c
+a.substring(1, 3) -> b,c
+
+differnece
+- if the first index is bigger,
+    -> substring  it swaps them.
+    -> slice return empty 
+    
+- if arguement is negative
+    -> substring treats it as '0.
+    -> slice trats it as length - index.

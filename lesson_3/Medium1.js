@@ -37,7 +37,7 @@ function change(letters) {
     
     for(let i = 0; i < letters.length; i++){
         if (letters[i] === letters[i].toUpperCase()) {
-            newstring = newstring + letters[i].toLowerCase(); //array가 아닌 string에서 각각 leter를 변환시켜 추가해 새로운어레이 만드는 loop
+            newstring = newstring + letters[i].toLowerCase(); //array가 아닌 string에서 각각 letter를 변환시켜 추가해 새로운어레이 만드는 loop
         } else {
             newstring = newstring + letters[i].toUpperCase();
         }
@@ -71,7 +71,7 @@ function factors2(number) {
     let factors = [];
     while (divisor > 0){ //0 이상일때만 들어감...
         if (number % divisor ===0) { // 나눴을때 나머지없이 딱나눠지는것은? 
-            factors.push (number / divisor); //note that you can youse factors.push (divisor) but it will be the reversing order.
+            factors.push (number / divisor); //note that you can use factors.push(divisor) but it will be the reversing order.
         }
         divisor -=1;
     }
@@ -106,7 +106,7 @@ function addToRollingBuffer2(buffer, maxBufferSize, newElement) {
   }
   return buffer;
 }
-//concat - create a new array
+//concat - create a new array (see line 118)
 
  
 console.log(addToRollingBuffer1(array, 8, 'a'));
@@ -115,7 +115,7 @@ console.log(addToRollingBuffer2(array1, 8, 'a'));
 
 
 console.log(array); //log [1, 2, 3, 4, 5, a]
-console.log(array1);  //log [1, 2, 3, 4,5] (didn't change)
+console.log(array1);  //log [1, 2, 3, 4, 5] (didn't change)
 
 
 //Question 5  what will log?
@@ -133,7 +133,7 @@ let nanArray = [NaN];
 
 console.log(nanArray[0] === NaN);
 
-//cannot use == or === to determine if it is Nan. need to use isNan 
+//cannot use == or === to determine if it is Nan. need to use isNan
 
 
 
@@ -151,7 +151,78 @@ console.log(answer - 8 ); // 34
 console.log(newAnswer) // 50
 
 
-//Question 8 ask
+//Question 8 ... will this function change the original musters?
+
+
+let munsters = {
+  Herman: { age: 32, gender: "male" },
+  Lily: { age: 30, gender: "female" },
+  Grandpa: { age: 402, gender: "male" },
+  Eddie: { age: 10, gender: "male" },
+  Marilyn: { age: 23, gender: "female" }
+};
+
+
+function messWithDemographics(demoObject) {
+  Object.values(demoObject).forEach(familyMember => {
+    familyMember["age"] += 42;
+    familyMember["gender"] = "other";
+  });
+}
+
+
+messWithDemographics(munsters);
+
+console.log(munsters);
+
+//when you log line20, you can see that the lines 12 & 13 mutates "munster" object. 
+//My understanding was that Object.values(object) returns a new array of properties from the object. why does it affect the original object? See my exampe below
 
 
 
+let objectA = {
+    a: 1,
+    b: 2,
+    c: 3
+};
+
+function changeA(object) {
+    Object.values(object)[0]['ab'] = "changed";
+    Object.values(object)[0] = "Notchanged";
+}
+
+
+changeA(objectA);
+
+console.log(objectA);
+
+//this will log ObjectA without any change as I expected.
+//In this example, line 34 doesn't mutate objectA. It will of course mutate the newly created array from line 34. (whcih we are never using in my example).
+
+
+/* Question - . I don't understand why line 12 & 13 actually mutate the original object 'munsters'. 
+I saw this outcome has something to do with "passed by reference"... but what is the difference between the two examples above? 
+why the first function mutates and the second function deosn't mutates?*/
+
+
+
+//because the elements of Object.values(demoObject) are object, and those of Object.values(objectA) are primitive.
+// pass by reference VS pass by value
+
+
+
+let objectB = {
+    a: {a: 12}, 
+    b: 2,
+    c: 3
+};
+
+function changeB(object) {
+    Object.values(object)[0]['a'] = "changed"; // Object.values(objectB) => The element [0] is object -> pass by referece
+    Object.values(object)[1] = "Notchanged"; // The element[1] is primitive => pass by value  
+}
+
+
+changeB(objectB);
+
+console.log(objectB);

@@ -30,12 +30,13 @@ let objectA = {
     c: 3
 };
 
-function change(object) {
-    Object.values(object).shift();
+function changeA(object) {
+    Object.values(object)[0]['ab'] = "changed";
+    Object.values(object)[0] = "Notchanged";
 }
 
 
-change(objectA);
+changeA(objectA);
 
 console.log(objectA);
 
@@ -46,3 +47,26 @@ console.log(objectA);
 /* Question - . I don't understand why line 12 & 13 actually mutate the original object 'munsters'. 
 I saw this outcome has something to do with "passed by reference"... but what is the difference between the two examples above? 
 why the first function mutates and the second function deosn't mutates?*/
+
+
+
+//because the elements of Object.values(demoObject) are object, and those of Object.values(objectA) are primitive.
+// pass by reference VS pass by value
+
+
+
+let objectB = {
+    a: {a: 12}, 
+    b: 2,
+    c: 3
+};
+
+function changeB(object) {
+    Object.values(object)[0]['a'] = "changed"; // Object.values(objectB) => The element [0] is object -> pass by referece
+    Object.values(object)[1] = "Notchanged"; // The element[1] is primitive => pass by value  
+}
+
+
+changeB(objectB);
+
+console.log(objectB);
