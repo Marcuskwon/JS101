@@ -1,0 +1,16 @@
+EXAMPLE
+
+let a = [1, 3];
+let b = [2];
+let arr = [a, b];
+
+arr; // => [ [ 1, 3 ], [ 2 ] ]    //a and b pointing at the same [1, 3] and [2]
+
+a[1] = 5;                       // a is upadted. but it will affect arr.
+arr; // => [ [ 1, 5 ], [ 2 ] ]
+
+WHAT IF WE UPDATE ARR DIRECTLY?
+
+arr[0][1] = 8;
+arr; // => [ [1, 8], [2] ]
+a; // => [1. 8]              //a also UPDATED

@@ -1,0 +1,222 @@
+1. What is the return value of the filter method call below? Why?
+[1, 2, 3].filter(num => 'hi');
+
+the filter only cares about if it is truthy. 'hi' is truthy.
+It will return the whole array [1, 2, 3]
+*falsy answer ->[ flase, null, undeflined, 0, NaN, "" ]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+2. What is the return value of map in the following code? Why?
+[1, 2, 3].map(num => {
+  num * num;
+});
+
+The call back function doesn't have any 'return'.
+Therfore the return value of map will be 
+[undefined, undefined, undefined]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+3. The following code differs slightly from the above code. 
+What is the return value of map in this case? Why?
+[1, 2, 3].map(num => num * num);
+
+without braces. "return" can be omitted.
+[1, 4, 9]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+4. What is the return value of the following statement? Why?
+['ant', 'bear', 'caterpillar'].pop().length
+
+pop will return the element it pops out of the array->the last element
+STRING 'caterpillar' is the return value.
+
+'caterpillar'.length = 11
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+5. What is the callback's return value in the following code? 
+Also, what is the return value of every in this code?
+
+[1, 2, 3].every(num => {
+  return num = num * 2;
+});
+
+1)the call back's return = 1 4 9 for each iternation.
+2)every's return value = all of them are truthy..  => "true"
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+6. How does Array.prototype.fill work? 
+Is it destructive? How can we find out?
+
+let arr = [1, 2, 3, 4, 5]
+arr.fill(1, 1, 5);
+
+.fill(a, b, c) replaces elements with 
+'a'starting 'b' index to 'c' index EXCLUDING 'c' index.
+and the mudated original will be the return.
+
+return -> [1, 1, 1, 1, 1]
+arr -> [1, 1, 1, 1, 1] - destructive
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+7. What is the return value of map in the following code? Why?
+['ant', 'bear'].map(elem => {
+  if (elem.length > 3) {    
+    return elem;             //this return only applies to 'bear'
+  }                         //otherwise, function does NOT have any RETURN
+});
+
+
+map will take each element and will pass that as argument to
+function call. 
+'ant'.length is less than 3, and it will NOT RETURN anything. 
+=> undefined.
+'bear'.length is more than 3, and it will return => 'bear'
+
+[undefined, 'bear]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+8.
+
+let flintstones = 
+["Fred", "Barney", "Wilma", "Betty", "Pebbles", "Bambam"];
+
+/*Write a program that uses this array to create an object 
+where the names are the keys and the values are the positions in the array:*/
+
+//{ Fred: 0, Barney: 1, Wilma: 2, Betty: 3, Pebbles: 4, Bambam: 5 }
+
+function creatObject(array) {
+  let obj = {};
+  array.forEach(element => {
+    obj[element] = array.indexOf(element);   // you have to use obj[] always instead of obj. when calling as function parameter
+                                             //even though obj doesn't hav any properties, you can still create them by assigning.   
+  }
+    )
+  return obj;
+}
+
+console.log(creatObject(flintstones));
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+9.
+
+Add up all of the ages from the Munster family object:
+
+
+let ages = {
+  Herman: 32,
+  Lily: 30,
+  Grandpa: 5843,
+  Eddie: 10,
+  Marilyn: 22,
+  Spot: 237
+};
+
+let arr = Object.values(ages);
+
+1) using reduce
+
+arr.reduce((accumulator, element)  => {         //this will itself return the total.
+  return accumulator + element;
+  });
+
+
+
+2) using forEach
+
+let sum =0;
+arr.forEach(element => {
+  sum = sum + element;             //this return undefined (forEach).
+});
+
+sum                               // Instead, the variable sum is the total.
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+10.Pick out the minimum age from our current Munster family object:
+
+
+let ages = {
+  Herman: 32,
+  Lily: 30,
+  Grandpa: 5843,
+  Eddie: 10,
+  Marilyn: 22,
+  Spot: 237
+};
+
+
+let arr = Object.values(ages);
+//[32, 30, 5843, 10, 22, 237]
+
+1) 
+
+let smallest = arr[0];
+
+arr.forEach(element => {
+    if (smallest > element) {
+    smallest = element;
+}});
+
+console.log(smallest);
+
+
+2)
+console.log(Math.min(...arr))     // Math.min() takes mutiple numbers as argument and returne the smallest.
+                                  // Must use "...arr" to turn the array into the 'number, number2, numbe3'.
+                                  
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+11. Create an object that expresses the frequency with which each letter occurs in this string:
+
+let statement = "The Flintstones Rock";
+
+outut ->  { T: 1, h: 1, e: 2, F: 1, l: 1, ... }
+
+
+let arr = statement.split('').filter(element => element !== ' ');
+let obj = {};
+
+1) using string.split(pattern) method. 
+arr.forEach(element => {
+obj[element] = statement.split(element).length -1    //statement.split(element).length -1  will be how many times that letter show up in the string.
+}
+)
+
+2) using forEach with short-circuiting
+arr.forEach(element => {
+obj[element] = obj[element] || 0;          // use short-circuiting if obj[element] is "undefined", it will be 0. If it has someting, it will remain same.
+obj[element] += 1;                         // and it adds +1 to the above result.
+}
+)
+
+3) using forEach and if
+arr.forEach(element => {
+if (obj[element]) {                        //if statement -> it checks if there is any value Obj[element]. if not -> flase.
+obj[element] += 1;                         // if there is any value it will add +1
+ } else {
+ obj[element] = 1;                        // if not, it will be 1 (starting point)
+}
+}
+)
+
+4) using for loop and if
+for (let i = 0; i < arr.length; i++) {
+  if (obj[arr[i]]) {
+    obj[arr[i]] += 1;                        //same as above explanation
+  } else {
+    obj[arr[i]] = 1;
+  }
+}
+
+console.log(obj);
+

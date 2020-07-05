@@ -1,0 +1,15 @@
+WHAT IS
+First-class value (, first-class object, or first-class functions) ?
+-> values that can be passed to functions as argument or retunred by those functions.
+*function is one of First-class value in JS*
+
+
+WHAT IS 
+Higher Order Functions?
+->functions that take other functions as argument. 
+
+the functions we pass to higher order functions are called "callback functions" or "callback".
+ex)arr.forEach(a => console.log(a)) .. 
+forEach: higher order function
+function (a) {return console.log(a)}: callback
+

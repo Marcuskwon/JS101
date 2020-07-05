@@ -1,0 +1,177 @@
+**************1. forEach
+
+1)Basic (returns undefined)
+  let numbers = [1, 2, 3];
+  let counter = 0;
+
+  while (counter < numbers.length) {
+    console.log(numbers[counter]);
+    counter += 1;
+  }
+
+This is the same as :
+
+  [1, 2, 3].forEach(number => {
+    console.log(number);
+  });
+
+
+
+2)forEach method can take two argument (second is optional: index position)
+
+
+3)forEach with string -> use string.split(pattern) method.
+
+
+4)forEach with Objects -> use Object.keys(obj) / Object.values(obj) / Object.entires(obj)
+
+  let produce = {
+    apple: 'Fruit',
+    carrot: 'Vegetable',
+    pear: 'Fruit',
+    broccoli: 'Vegetable'
+  };
+
+  let produceKeyValues = Object.entries(produce);
+  // produceKeyValues contains:
+  //   [['apple', 'Fruit'],
+  //    ['carrot', 'Vegetable'],
+  //    ['pear', 'Fruit'],
+  //    ['broccoli', 'Vegetable']]
+
+  produceKeyValues.forEach(keyValue => {
+   let [key, value] = keyValue;                         *this is important. This will extract PROPERTIES and VALUES.
+                                                         *"array destructuring assignment"
+
+    console.log(`${key} is a ${value}`);
+  });
+  // logs:
+  // apple is a Fruit
+  // carrot is a Vegetable
+  // pear is a Fruit
+  // broccoli is a Vegetable
+
+5)forEach returns "undefined"
+
+
+
+
+**************2. filter (return should be evaluating truthiness (if not falsy -> it will return array with the element after filter))
+
+1)Basic
+  let numbers = [1, 2, 3];
+  let oddNumbers = [];
+
+  for (let index = 0; index < numbers.length; index += 1) {
+    if (numbers[index] % 2 === 1) {
+    oddNumbers.push(numbers[index]);
+    }
+  }
+
+  oddNumbers; // => [1, 3]
+
+  This is the same as:
+
+  let oddNumbers = [1, 2, 3].filter(num => {
+    return num % 2 === 1;                                 *This part of filter function only cares about TRUTHINESS.
+                                                          *If the return is string -> it will be always truthy. (meaning the whole array return)
+  });
+
+  oddNumbers; // => [1, 3]
+  
+  
+  
+  2)using filter vs forEach
+  
+  let produce = {
+  apple: 'Fruit',
+  carrot: 'Vegetable',
+  pear: 'Fruit',
+  broccoli: 'Vegetable'
+};
+
+
+  let produceKeyValues = Object.entries(produce);                           // making array [[keys: values]]
+  let onlyVegetablesArr = produceKeyValues.filter(keyValue => {             //filter if values = vegetable
+    let [key, value] = keyValue;
+    return value === 'Vegetable';
+  });
+
+  let onlyVegetables = {};
+
+  onlyVegetablesArr.forEach(keyValue => {                                   //forEach 
+    let [key, value] = keyValue;
+    onlyVegetables[key] = value;                                            //assigning valye to key
+  });
+
+  onlyVegetables; // => {carrot: 'Vegetable', broccoli: 'Vegetable'}  
+
+
+  -------------This is too complicated.. just use forEach for object filtering:----------------
+
+  let produce = {
+   apple: 'Fruit',
+   carrot: 'Vegetable',
+   pear: 'Fruit',
+   broccoli: 'Vegetable'
+  };
+
+  let produceKeyValues = Object.entries(produce);
+  let onlyVegetables = {};
+
+  produceKeyValues.forEach(keyValue => {
+    let [key, value] = keyValue;
+   if (value === 'Vegetable') {
+     onlyVegetables[key] = value;
+    }
+  });
+
+  onlyVegetables; // => {carrot: 'Vegetable', broccoli: 'Vegetable'}
+  
+  much easier!
+  
+  
+  
+**************3.map (return will an array after the method function)
+
+
+**************4. filter and map with strings (use split() and join())
+
+let str = "What's up, Doc?";
+str.split('')
+   .filter(char => 'aeiou'.includes(char.toLowerCase()))
+   .join('');
+// => 'auo'
+
+
+let str = "What's up, Doc?";
+str.split('')
+   .map(char => char + char)
+   .join('');
+// => "WWhhaatt''ss  uupp,,  DDoocc??"
+
+
+
+
+**************5. summary
+
+Method    Action     Considers the return            Returns a new array from the method      Length of the returned array
+                     value of the call back
+
+forEach   Iteration         NO                            No, it returns undefined                     N/A
+
+filter    Selection/    Yes, its truthiness                       Yes                         Length of original or less
+          filtering
+
+map     Transformation      Yes                                   Yes                         Length of original
+
+
+
+
+
+**************6. Array.some(num => num > 2) will check if there is SOME element more than 2 -> will return true / false
+**************7. Array.every(num => num > 2) will check if there is EVERY element more than 2 -> will return true / false
+**************8. Array.find(num => num > 2) will return the FIRST element that matches. if nothing.. return undefined
+**************9. Arrat.findIndex(num => num > 2) will return the index of FIRST element that matches if nothing..  return -1
+**************10. Array.reverse() will reverse the order of the original array (mutating)
+**************11. Array.includes(num) will check if Array indluces number. wull return true / false

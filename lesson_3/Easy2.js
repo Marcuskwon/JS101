@@ -81,11 +81,11 @@ Object.entries(flintstones)[2] //Object.entries(object) will create an array wit
 //Question 8 
 //How would you check whether the objects assigned to variables numbers and table below are arrays?
 
-let numbers = [1, 2, 3, 4]; // true
-let table = { field1: 1, field2: 2, field3: 3, field4: 4 }; // false
+let numbers = [1, 2, 3, 4]; 
+let table = { field1: 1, field2: 2, field3: 3, field4: 4 }; 
 
-Array.isArray(numbers); 
-Array.isArray(table); 
+Array.isArray(numbers); // true
+Array.isArray(table);  // false
 
 //Question 9
 //Write two one-line expressions to count the number of lower-case t characters in each of the following strings:
@@ -101,7 +101,7 @@ let statement2 = "Easy come, easy go.";
 In order to count the "0" used || [] since it will return [] when there is nothing. And length will tell you how many elements.
 
 
-//Question 100
+
 /*Question 10
 Back in the stone age (before CSS), we used spaces to align things on the screen. 
 If we have a 40-character wide table of Flintstone family members, how can we center the following title above the table with spaces?*/

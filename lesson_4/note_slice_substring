@@ -1,6 +1,6 @@
 difference betweein .substring(a, b) and .slice(a, b)
 
-They both will return a string with from (index a to the end point b exlucidng b)
+They both will return a string with (from index a to the end point b exlucidng b)
 
 let a = 'abcd'
 
@@ -14,4 +14,4 @@ differnece
     
 - if arguement is negative
     -> substring treats it as '0.
-    -> slice trats it as length - index.
+    -> slice treats it as length - index.

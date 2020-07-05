@@ -92,6 +92,7 @@ function mortgage () {
   while (true) {
 
     let loan = getInput ('loan', 'loanError', isInvalidLoan);
+    console.log(Number.isNaN(loan));
 
     let rate = getInput ('rate', 'rateError', isInvalidRate);
 

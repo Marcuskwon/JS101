@@ -1,0 +1,57 @@
+SHALLOW COPY
+When the array contains other objects, like a nested array, then those objects are shared, not copied. 
+
+1. SHALLOW COPYING ARRAYS
+
+arr1.slice()
+[...arr1]
+
+example 1)
+let arr = ['a', 'b', 'c'];
+let copyOfArr = [...arr]; (or slice)
+
+copyOfArr.push('d');
+
+copyOfArr; // => [ 'a', 'b', 'c', 'd' ]  
+arr;       // => [ 'a', 'b', 'c' ]       // DOES NOT CHANGE
+
+=> shallow copy: only the top level array is copied
+
+
+example 2)
+let arr = [['a'], ['b'], ['c']]
+let copyOfArr = arr.slice();
+
+copyOfArr[1].push('d');
+
+copyOfArr; // => [ [ 'a' ], [ 'b', 'd' ], [ 'c' ] ]
+arr;       // => [ [ 'a' ], [ 'b', 'd' ], [ 'c' ] ] //CHANGED!!!! (changed shared 'object')
+
+
+
+2. SHALLOW COPYING OBJECTS
+
+Object.assign({}, obj2)
+
+
+example 1)
+
+let obj = { a: 'foo', b: 'bar' };
+let copyOfObj = Object.assign({}, obj);
+
+copyOfObj; // => { a: 'foo', b: 'bar' }
+
+
+copyOfObj['c'] = 'baz';
+copyOfObj; // => { a: 'foo', b: 'bar', c: 'baz' }
+obj;       // => { a: 'foo', b: 'bar' }               //DOES NOT CHANGED 
+
+
+
+example 2)
+let obj = { a: { b: 'foo' }, c: ['bar'] };
+let copyOfObj = Object.assign({}, obj);
+
+obj['a']['d'] = 'baz';
+copyOfObj; // => { a: { b: 'foo', d: 'baz' }, c: [ 'bar' ] }
+obj;       // => { a: { b: 'foo', d: 'baz' }, c: [ 'bar' ] }  // CHANGED!!! (changed shared 'object')

@@ -1,0 +1,48 @@
+DEEP COPY 
+
+
+1)
+JSON.stringify(arr);     
+JSON.parse(serializedArr);
+
+only for 
+NESTED ARRAYS
+PLAIN OBJECTS
+
+
+example)
+let arr = [{ b: 'foo' }, ['bar']];
+let serializedArr = JSON.stringify(arr);     
+let deepCopiedArr = JSON.parse(serializedArr);  
+
+deepCopiedArr[1].push('baz');                           //updating element 1 (which is an array itself)
+deepCopiedArr; // => [ { b: 'foo' }, [ 'bar', 'baz' ] ]
+arr;           // => [ { b: 'foo' }, [ 'bar' ] ]        // didn't change element 1 ! => deep copy    
+
+
+
+2)
+Freezing Objects
+Object.freeze
+
+example1 )
+let obj = Object.freeze({ a: 'foo' });
+let arr = Object.freeze(['a', 'b', 'c']);
+
+obj['b'] = 'bar';
+obj; // => { a: 'foo' }            //NOT CHANGED
+
+arr.push('d'); // => TypeError: Cannot add property 3, object is not extensible
+arr; // => [ 'a', 'b', 'c' ]      //NOT CHANGED
+
+
+
+
+*you cannot freeze interger (already frozen)
+*Object.isFrozen('abc'); // => true
+
+
+example2 )
+let arr = Object.freeze([[1], [2], [3]]);
+arr[2].push(4);
+arr; // =>  [ [ 1 ], [ 2 ], [ 3, 4 ] ]    //it didn't freeze arr[2]. It freezes the entire 'arr'.

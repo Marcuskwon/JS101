@@ -19,9 +19,13 @@ whether a given string ends with an exclamation mark (!)? */
 let str1 = "Come over here!"; // true
 let str2 = "What's up, Doc?"; // false
 
+
 console.log(str1.slice(-1) === '!');
 console.log(str2.slice(-1) === '!');
-// or you can do str1.endsWith("!"); will return yes or no
+
+or 
+
+str1.endsWith("!"); // will return yes or no
 
 
 /*Question3
@@ -30,7 +34,10 @@ Determine whether the following object of people and their age contains an entry
 let ages = { Herman: 32, Lily: 30, Grandpa: 402, Eddie: 10 };
 
 Object.keys(ages).includes('Spot') 
-/* you can do ages.hasOwnProperty('Spot'); will return true or false*/
+
+or
+
+ages.hasOwnProperty('Spot'); will return true or false*/
 
 
 
@@ -101,8 +108,6 @@ flinstones.push("dino", "Hoppy")  // You can push multiple elements
 or
 
 flintstones = flintstones.concat("Dino", "Hoppy"); // you can concat multiple
-
-console.log(flintstones);
 
 
 /* Question 10

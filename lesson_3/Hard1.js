@@ -22,7 +22,7 @@ console.log(object2);
 //1
 function messWithVars(one, two, three) {
   one = two; //reassigning arguements passed them as parameter? doesn't change
-  two = three;
+  two = three; //They are variables only under this function' scope
   three = one;
 }
 
@@ -38,8 +38,8 @@ console.log(`three is: ${three}`);
 
 //2
 function messWithVars(one, two, three) {
-  one = ["two"]; //reassigning arguements passed them as parameter? doesn't change
-  two = ["three"];
+  one = ["two"]; //reassigning arguements passed them as parameter? doesn't change. 
+  two = ["three"]; //They are variables only under this function' scope
   three = ["one"];
 }
 
