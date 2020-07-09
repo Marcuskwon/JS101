@@ -98,11 +98,41 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
-function computerChoosesSquare(board) {
-  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-  let square = emptySquares(board)[randomIndex];
-  board[square] = COMPUTER_MARKER;
+
+
+function computerChoosesSquare(boardObj) {
+  let square;
+  let WINNING_LINES = [
+    [1, 2, 3], [4, 5, 6], [7, 8, 9], // rows
+    [1, 4, 7], [2, 5, 8], [3, 6, 9], // columns
+    [1, 5, 9], [3, 5, 7]             // diagonals
+  ];
+
+///////이부분 아직 제대로 작동안함... 자꾸 127부분에서 멈춰서 나가는듯//
+
+  for (let line = 0; line < WINNING_LINES.length; line++) {
+    let [sq1, sq2, sq3] = WINNING_LINES[line];
+
+    if (boardObj[sq1] === HUMAN_MARKER && boardObj[sq2] === HUMAN_MARKER && emptySquares(boardObj).includes(Number(sq3))) {
+        square = sq3;
+        break;
+        } else if (boardObj[sq1] === HUMAN_MARKER && boardObj[sq3] === HUMAN_MARKER && emptySquares(boardObj).includes(Number(sq2))) {
+        square = sq2;
+        break;
+        } else if (boardObj[sq2] === HUMAN_MARKER && boardObj[sq3] === HUMAN_MARKER && emptySquares(boardObj).includes(Number(sq1))) {
+          square = sq1;
+          break;
+        } else {
+          let randomIndex = Math.floor(Math.random() * emptySquares(boardObj).length);
+          square = emptySquares(boardObj)[randomIndex];
+          
+        }
+  }
+  boardObj[square] = COMPUTER_MARKER;
 }
+
+
+
 
 function boardFull(board) {
   return emptySquares(board).length === 0;
@@ -220,6 +250,7 @@ while (true) {
   displayScore(scoreBoard);
   
   let clearingAnswer = yesOrNo('Do you want to clear the game board?');
+  
   if (clearingAnswer === 'y') console.clear();
   
   detectGrandWinner(scoreBoard, winsNeeded);
