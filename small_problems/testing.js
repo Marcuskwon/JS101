@@ -1,15 +1,84 @@
-/*Your goal in this kata is to implement a difference function, 
-which subtracts one list from another and returns the result.
+/*Write a function that takes one argument, a positive integer, and returns a string of alternating '1's and '0's, always starting with a '1'. 
+The length of the string should match the given integer.
 
-It should remove all values from list a, which are present in list b.
-
-arrayDiff([1,2],[1]) == [2]
-If a value is present in b, all of its occurrences must be removed from the other:
-
-arrayDiff([1,2,2,2,3],[2]) == [1,3]*/
+stringy(6);    // "101010"
+stringy(9);    // "101010101"
+stringy(4);    // "1010"
+stringy(7);    // "1010101"
 
 
-function arrayDiff(arr1, arr2) {
-  
-  
+
+
+input a number
+output a string (new)
+
+
+rule
+a number will be converted to a new string set of the repetition of 10.
+a new string always starts with 1
+
+
+
+algo
+6 101010
+5 10101
+4 1010
+3 101
+2 10
+1 1
+
+
+
+
+GET number
+
+SET counter = 0
+SET string = '1'
+
+while(true)
+if (string.length === number) break;
+if (counter % 2 ===0) {
+    string +'0'
+} else if (counter % 2 ===1) {
+    string +'1'
 }
+counter ++
+
+
+
+
+
+test
+inpit === output.length
+stringy(6);    // "101010"
+stringy(9);    // "101010101"
+stringy(4);    // "1010"
+stringy(7);    // "1010101"
+
+
+*/
+
+function stringy(number) {
+    let counter = 0;
+    let string = '1';
+    while (true) {
+    if (string.length === number) break;
+    if (counter % 2 ===0) {
+      string +='0';
+    } else if (counter % 2 ===1) {
+      string +='1';
+    }
+    counter ++;
+    }
+    return string;
+}
+    
+
+
+
+
+console.log(stringy(6));    // "101010"
+console.log(stringy(9));    // "101010101"
+console.log(stringy(4));    // "1010"
+console.log(stringy(7));    // "1010101"
+
