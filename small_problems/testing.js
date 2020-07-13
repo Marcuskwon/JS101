@@ -1,84 +1,19 @@
-/*Write a function that takes one argument, a positive integer, and returns a string of alternating '1's and '0's, always starting with a '1'. 
-The length of the string should match the given integer.
+const readline = require('readline-sync');
 
-stringy(6);    // "101010"
-stringy(9);    // "101010101"
-stringy(4);    // "1010"
-stringy(7);    // "1010101"
+console.log('Enter a noun');
+let n = readline.prompt();
 
+console.log('Enter a verb');
+let v = readline.prompt();
 
+console.log('Enter an adjective');
+let adj = readline.prompt();
 
-
-input a number
-output a string (new)
-
-
-rule
-a number will be converted to a new string set of the repetition of 10.
-a new string always starts with 1
+console.log('Enter an adverb');
+let adv = readline.prompt();
 
 
 
-algo
-6 101010
-5 10101
-4 1010
-3 101
-2 10
-1 1
-
-
-
-
-GET number
-
-SET counter = 0
-SET string = '1'
-
-while(true)
-if (string.length === number) break;
-if (counter % 2 ===0) {
-    string +'0'
-} else if (counter % 2 ===1) {
-    string +'1'
-}
-counter ++
-
-
-
-
-
-test
-inpit === output.length
-stringy(6);    // "101010"
-stringy(9);    // "101010101"
-stringy(4);    // "1010"
-stringy(7);    // "1010101"
-
-
-*/
-
-function stringy(number) {
-    let counter = 0;
-    let string = '1';
-    while (true) {
-    if (string.length === number) break;
-    if (counter % 2 ===0) {
-      string +='0';
-    } else if (counter % 2 ===1) {
-      string +='1';
-    }
-    counter ++;
-    }
-    return string;
-}
-    
-
-
-
-
-console.log(stringy(6));    // "101010"
-console.log(stringy(9));    // "101010101"
-console.log(stringy(4));    // "1010"
-console.log(stringy(7));    // "1010101"
-
+console.log(`Do you ${v} your ${adj} ${n} ${adv}? That's hilarious!`);
+console.log(`The ${adj} ${n} ${v}s ${adv} over the lazy ${n}`);
+console.log(`The ${n} ${adv} ${v}s up ${adj} Joe's turtle `);
