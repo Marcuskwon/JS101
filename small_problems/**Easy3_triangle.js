@@ -13,7 +13,7 @@ if(i === -1) break
 */
 
 function triangle(number) {
-  let arr = ' '.repeat(number).split('');
+  let arr = ' '.repeat(number).split(''); //create an array that has the same length of the input  (becuase every line will have the same length!)
   let i = arr.length - 1;
   while(true) {
     arr[i] = '*';

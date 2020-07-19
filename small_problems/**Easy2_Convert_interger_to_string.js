@@ -40,19 +40,19 @@ Number = 54321 ... You can do Math.floor(number / 10) every turn.. so it will re
 
 */
 
-
+//using the fact that array.join function will make automatically the outcome as string.
 
 function integerTostring(number) {
   let numberArry = [];
   do {
-    let remainder = number % 10;
-    number = Math.floor(number / 10);
+    let remainder = number % 10; //the last number to the array 
+    number = Math.floor(number / 10); // remove the last number and prepare a new number for next loop
     
-    numberArry.push(remainder);
+    numberArry.push(remainder); //the last number to the array 
     
   } while (number > 0);
   
-  return numberArry.reverse().join('');
+  return numberArry.reverse().join(''); //because of push method, the array needs to be reversed 
 }
 
 
