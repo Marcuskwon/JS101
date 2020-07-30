@@ -221,6 +221,9 @@ function yesOrNo(msg) {
   return output;
 }
 
+function keepPlaying(answer) {
+  return !!((answer === 'y' || answer === 'yes'));
+}
 
 while (true) {
 
@@ -264,7 +267,7 @@ while (true) {
 
   let playingAgainAnswer = yesOrNo('Do you want to play again?');
 
-  if (playingAgainAnswer === 'n' || playingAgainAnswer === 'no') break;
+  if (!keepPlaying(playingAgainAnswer)) break;
 
 }
 
