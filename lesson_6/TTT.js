@@ -3,17 +3,20 @@ const INITIAL_MARKER = ' ';
 const HUMAN_MARKER = 'X';
 const COMPUTER_MARKER = 'O';
 const VALID_YES_OR_NO = ['y', 'n', 'yes', 'no'];
-
-
+const WINNING_LINES = [
+  [1, 2, 3], [4, 5, 6], [7, 8, 9],
+  [1, 4, 7], [2, 5, 8], [3, 6, 9],
+  [1, 5, 9], [3, 5, 7]
+];
+const MIDDLE_SQUARE = '5';
 
 function prompt(msg) {
   console.log(`=> ${msg}`);
 }
 
-
-
 function displayBoard(board) {
 
+  console.clear();
 
   console.log(`You are ${HUMAN_MARKER}. Computer is ${COMPUTER_MARKER}`);
 
@@ -32,13 +35,12 @@ function displayBoard(board) {
   console.log('');
 }
 
-function initializeBoard() {  
-  let board = {};
 
+function initializeBoard() {
+  let board = {};
   for (let square = 1; square <= 9; square++) {
     board[String(square)] = INITIAL_MARKER;
   }
-
   return board;
 }
 
@@ -46,12 +48,12 @@ function initializeBoard() {
 function joinOr (array, delimiter = ', ', word = 'or') {
   if (array.length === 1) {
     return array[array.length - 1];
-  } else if (array.length ===2){
+  } else if (array.length === 2) {
     return array.join(` ${word} `);
   } else {
-  return array
-  .slice(0, array.length - 1)
-  .join(delimiter) +
+    return array
+      .slice(0, array.length - 1)
+      .join(delimiter) +
   `${delimiter}${word} ${array[array.length - 1]}`;
   }
 }
@@ -61,10 +63,10 @@ function emptySquares(board) {
 }
 
 
-function getBestofWhat() { 
+function getBestofWhat() {
   prompt('Best of how many rounds?');
   let output = Number(readline.question());
-  
+
   while (!Number.isInteger(output) ||
                  output % 2 === 0 ||
                  output <= 0) {
@@ -79,10 +81,19 @@ function getWinsRequired(input) {
   return Math.ceil(input / 2);
 }
 
+
 function displayWinsRequired(winsRequired) {
   prompt(`Whoever first achieves ${winsRequired} win(s) will be The Grand Winner!`);
 }
 
+function choosingWhoPlaysFirst() {
+  let answer = yesOrNo('Do you want to make the first move? "y" or "n"');
+  if (answer === 'y' || answer === 'yes') {
+    return 'player';
+  } else {
+    return 'computer';
+  }
+}
 
 function playerChoosesSquare(board) {
   let square;
@@ -98,10 +109,56 @@ function playerChoosesSquare(board) {
   board[square] = HUMAN_MARKER;
 }
 
+
+function findAtRiskSquare(line, board, marker) {
+  let markersInLine = line.map(square => board[square]);
+
+  if (markersInLine.filter(val => val === marker).length === 2) {
+    let unusedSqaure = line.find(square => board[square] === ' ');
+    if (unusedSqaure) return unusedSqaure;
+  }
+  return null;
+}
+
+function smartMove (board, marker) {
+  let choice;
+  for (let index = 0; index < WINNING_LINES.length; index++) {
+    let line = WINNING_LINES[index];
+    choice = findAtRiskSquare(line, board, marker);
+    if (choice) break;
+  }
+  return choice;
+}
+
+function pickRandomSquare (board) {
+  let index = Math.floor(Math.random() * emptySquares(board).length);
+  return emptySquares(board)[index];
+}
+
+
 function computerChoosesSquare(board) {
-  let randomIndex = Math.floor(Math.random() * emptySquares(board).length);
-  let square = emptySquares(board)[randomIndex];
+  let square = smartMove(board, COMPUTER_MARKER);
+
+  if (!square) square = smartMove(board, HUMAN_MARKER);
+
+  if (!square && emptySquares(board).includes(MIDDLE_SQUARE)) {
+    square = MIDDLE_SQUARE;
+  }
+
+  if (!square) square = pickRandomSquare (board);
+
   board[square] = COMPUTER_MARKER;
+}
+
+
+function chooseSquare(board, currentPlayer) {
+  return (currentPlayer === 'player') ?
+    playerChoosesSquare(board) : computerChoosesSquare(board);
+
+}
+
+function alternatePlayer(currentPlayer) {
+  return (currentPlayer === 'player') ? 'computer' : 'player';
 }
 
 function boardFull(board) {
@@ -113,68 +170,51 @@ function someoneWon(board) {
 }
 
 function detectWinner(board) {
-  let winningLines = [
-    [1, 2, 3], [4, 5, 6], [7, 8, 9], // rows
-    [1, 4, 7], [2, 5, 8], [3, 6, 9], // columns
-    [1, 5, 9], [3, 5, 7]             // diagonals
-  ];
-
-  for (let line = 0; line < winningLines.length; line++) {
-    let [sq1, sq2, sq3] = winningLines[line];
-
-    if (
-        board[sq1] === HUMAN_MARKER &&
-        board[sq2] === HUMAN_MARKER &&
-        board[sq3] === HUMAN_MARKER
-    ) {
+  for (let index = 0; index < WINNING_LINES.length; index++) {
+    if (WINNING_LINES[index]
+      .every(element => board[element] === HUMAN_MARKER)) {
       return 'Player';
-    } else if (
-        board[sq1] === COMPUTER_MARKER &&
-        board[sq2] === COMPUTER_MARKER &&
-        board[sq3] === COMPUTER_MARKER
-    ) {
+    } else if (WINNING_LINES[index]
+      .every(element => board[element] === COMPUTER_MARKER)) {
       return 'Computer';
     }
   }
   return null;
-
 }
 
-function updateScore(isScoreChanged, scoreobj, winner) {
- if (isScoreChanged || winner) {
-  scoreobj[winner]++;
- }
+
+function updateScore(isScoreChanged, scoreObj, winner) {
+  if (isScoreChanged || winner) scoreObj[winner]++;
 }
 
-function displayScore(scoreobj) {
-  console.log(scoreobj);
+function displayScore(scoreObj) {
+  console.log(scoreObj);
 }
 
-function detectGrandWinner(scoreobj, winsRequired) {
-  if(scoreobj['Player'] === winsRequired) {
+function detectGrandWinner(scoreObj, winsRequired) {
+  if (scoreObj['Player'] === winsRequired) {
     return 'Player';
-  } else if (scoreobj['Computer'] === winsRequired) {
+  } else if (scoreObj['Computer'] === winsRequired) {
     return 'Computer';
   } else {
     return null;
   }
 }
 
-function isWonMatch(scoreobj, winsRequired) {
-  return detectGrandWinner(scoreobj, winsRequired);
+function isWonMatch(scoreObj, winsRequired) {
+  return detectGrandWinner(scoreObj, winsRequired);
 }
 
-function displayGrandWinner(winsRequired) {
-  prompt(`The Grand Winner is ${detectGrandWinner(winsRequired)} `);
+function displayGrandWinner(scoreObj, winsRequired) {
+  prompt(`The Grand Winner is ${detectGrandWinner(scoreObj, winsRequired)} `);
 }
-
 
 
 function yesOrNo(msg) {
   prompt(msg);
   let output = readline.question().toLowerCase();
-  
-  while(!VALID_YES_OR_NO.includes(output)) {
+
+  while (!VALID_YES_OR_NO.includes(output)) {
     prompt('Please choose yes or no');
     output = readline.question().toLowerCase();
   }
@@ -190,49 +230,41 @@ while (true) {
   let scoreBoard = {Player: 0, Computer: 0};
 
 
-while (true) {
-
-  let board = initializeBoard();
-  
-
   while (true) {
+    let currentPlayer = choosingWhoPlaysFirst();
+    let board = initializeBoard();
+
+    while (true) {
+
+      displayBoard(board);
+      chooseSquare(board, currentPlayer);
+      currentPlayer = alternatePlayer(currentPlayer);
+      if (someoneWon(board) || boardFull(board)) break;
+
+    }
+
     displayBoard(board);
-   
-    
-    playerChoosesSquare(board);
-    if (someoneWon(board) || boardFull(board)) break;
 
-    computerChoosesSquare(board);
-    if (someoneWon(board) || boardFull(board)) break;
+    if (someoneWon(board)) {
+      prompt(`${detectWinner(board)} won!`);
+    } else {
+      prompt("It's a tie!");
+    }
+
+    updateScore(someoneWon(board), scoreBoard, detectWinner(board));
+
+    displayScore(scoreBoard);
+
+    detectGrandWinner(scoreBoard, winsNeeded);
+
+    if (isWonMatch(scoreBoard, winsNeeded)) break;
   }
-  
-  displayBoard(board);
 
-  if (someoneWon(board)) {
-    prompt(`${detectWinner(board)} won!`);
-  } else {
-    prompt("It's a tie!");
-  }
-  
-  
-  updateScore(someoneWon(board), scoreBoard, detectWinner(board));
-  
-  displayScore(scoreBoard);
-  
-  let clearingAnswer = yesOrNo('Do you want to clear the game board?');
-  if (clearingAnswer === 'y') console.clear();
-  
-  detectGrandWinner(scoreBoard, winsNeeded);
-  
-  if (isWonMatch(scoreBoard, winsNeeded)) break;
-  
-}
+  displayGrandWinner(scoreBoard, winsNeeded);
 
-displayGrandWinner(winsNeeded);
+  let playingAgainAnswer = yesOrNo('Do you want to play again?');
 
-let playingAgainAnswer = yesOrNo('Do you want to play again?');
-
-if (playingAgainAnswer === 'n') break;
+  if (playingAgainAnswer === 'n' || playingAgainAnswer === 'no') break;
 
 }
 

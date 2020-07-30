@@ -46,4 +46,4 @@ return arr.join('').replace(/  +/g, ' ');
 
 
 
-console.log(cleanUp("---what's my +*& line?"));    // " what s my line "
+console.log(cleanUp("---whAt's my +*& line?"));    // " what s my line "
