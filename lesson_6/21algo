@@ -1,0 +1,39 @@
+/*
+1. Initialize deck
+ -shuffle
+
+2. Deal cards to player and dealer (function dealingInitialCards(deck))
+ -initialize two empty array -> playerCards and dealerCards
+ -display player's two cards (function displayCards(playerCards)) //use default parameter
+ and dealer's first card (function displayCards(dealerCards, 0))
+
+3. Player turn: hit or stay (while loop)
+   -ask if they want to hit or stay (function askingHitOrStay(msg)) 
+   -if hit (function pickingOneCard(deck)) / (function addingCard(playerCards))
+   -display cards every time (function displayCards(playerCards))
+   -check if bust every time  (function busted(playerCards))
+
+   - repeat until bust or stay
+   
+4. If player bust, dealer wins.
+
+5. Dealer turn: (while loop)
+show dealers all cards  (function displayCards(dealerCards))
+type anything to move next (function nextStep(msg))
+pickingOneCard(deck)) / (function addingCard(dealerCards))
+repeat until total >= 17 (function biggerThanSeventeen(dealerCards))
+check if bust every time  (function busted(playerCards))
+6. If dealer busts, player wins.
+
+7. Compare cards and declare winner. 
+(function detectWinner(playerCards, dealerCards)) and (function displayWinner())
+
+
+
+data structure for cards (card deck, player, dealer)
+
+2 3 4 5 6 7 8 9 10 - face value
+J Q K              - 10
+ACE                - 1 or 11
+
+*/

@@ -63,7 +63,7 @@ function emptySquares(board) {
 }
 
 
-function getBestofWhat() {
+function getnumberOfRounds() {
   prompt('Best of how many rounds?');
   let output = Number(readline.question());
 
@@ -85,6 +85,7 @@ function getWinsRequired(input) {
 function displayWinsRequired(winsRequired) {
   prompt(`Whoever first achieves ${winsRequired} win(s) will be The Grand Winner!`);
 }
+
 
 function choosingWhoPlaysFirst() {
   let answer = yesOrNo('Do you want to make the first move? "y" or "n"');
@@ -120,7 +121,7 @@ function findAtRiskSquare(line, board, marker) {
   return null;
 }
 
-function smartMove (board, marker) {
+function smartMove(board, marker) {
   let choice;
   for (let index = 0; index < WINNING_LINES.length; index++) {
     let line = WINNING_LINES[index];
@@ -182,6 +183,14 @@ function detectWinner(board) {
   return null;
 }
 
+function displayWinner(board) {
+    if (someoneWon(board)) {
+      prompt(`${detectWinner(board)} won!`);
+    } else {
+      prompt("It's a tie!");
+    }
+}
+
 
 function updateScore(isScoreChanged, scoreObj, winner) {
   if (isScoreChanged || winner) scoreObj[winner]++;
@@ -226,11 +235,12 @@ function keepPlaying(answer) {
 }
 
 while (true) {
+  console.clear();
 
-  let bestOfWhat = getBestofWhat();
-  let winsNeeded = getWinsRequired(bestOfWhat);
+  let numberOfRounds = getnumberOfRounds();
+  let winsNeeded = getWinsRequired(numberOfRounds);
   displayWinsRequired(winsNeeded);
-  let scoreBoard = {Player: 0, Computer: 0};
+  let scoreBoard = {player: 0, computer: 0};
 
 
   while (true) {
@@ -248,11 +258,7 @@ while (true) {
 
     displayBoard(board);
 
-    if (someoneWon(board)) {
-      prompt(`${detectWinner(board)} won!`);
-    } else {
-      prompt("It's a tie!");
-    }
+    displayWinner(board);
 
     updateScore(someoneWon(board), scoreBoard, detectWinner(board));
 
