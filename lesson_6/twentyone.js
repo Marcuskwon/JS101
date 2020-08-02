@@ -116,7 +116,7 @@ function decidingAceValue(arr, total) {
 
 function calculatingCards(arr) {
   let total = 0;
-  
+
   for (let index = 0; index < arr.length; index++) {
     if (!isNaN(Number(arr[index][VALUE_INDEX]))) {
       total += Number(arr[index][VALUE_INDEX]);
@@ -129,12 +129,12 @@ function calculatingCards(arr) {
       continue;
     }
   }
-  
+
   total += decidingAceValue(arr, total);
   return total;
 }
 
- 
+
 function updateScore(winner, score) {
   score[winner]++;
 }
@@ -153,11 +153,10 @@ function isWonMatch(score) {
 }
 
 function displayGrandWinner(score) {
-  if(whoIsGrandWinner(score)) {
+  if (whoIsGrandWinner(score)) {
     console.log(`The Grand Winner is: ${whoIsGrandWinner(score)}!!`);
+  }
 }
-}
-
 
 
 function isDone(answer) {
@@ -165,110 +164,110 @@ function isDone(answer) {
 }
 
 
-
-
 while (true) {
 
   nextStep(`WELCOME TO ${MAX_NUMBER}! who reaches ${WINNING_SCORE} points first will be The Grand Winner!`);
-  
-    let scoreBoard = {
-    'dealer': 0,
-    'player': 0
+
+  let scoreBoard = {
+    dealer: 0,
+    player: 0
   };
-  
-while (true) {
-    
-  console.clear();
 
   while (true) {
 
-    let mainDeck = initializingCards();
-    shuffle(mainDeck);
+    console.clear();
 
-    let playerCards = [];
-    let dealerCards = [];
-   
-    // first deal to player
-    dealingCards(mainDeck, playerCards);
-    displayCards('player', playerCards);
-    nextStep('type anything to move next');
+    while (true) {
 
-    // first deal to dealer
-    dealingCards(mainDeck, dealerCards);
-    displayCards('dealer', dealerCards);
-    nextStep('Type anything to move next');
+      let mainDeck = initializingCards();
+      shuffle(mainDeck);
 
-    // second deal to player
-    dealingCards(mainDeck, playerCards);
-    displayCards('player', playerCards);
+      let playerCards = [];
+      let dealerCards = [];
 
-    // second deal to dealer
-    dealingCards(mainDeck, dealerCards);
+      // first deal to player
+      dealingCards(mainDeck, playerCards);
+      displayCards('player', playerCards);
+      nextStep('type anything to move next');
+
+      // first deal to dealer
+      dealingCards(mainDeck, dealerCards);
+      displayCards('dealer', dealerCards);
+      nextStep('Type anything to move next');
+
+      // second deal to player
+      dealingCards(mainDeck, playerCards);
+      displayCards('player', playerCards);
+
+      // second deal to dealer
+      dealingCards(mainDeck, dealerCards);
 
 
-    while (true) { //player turn
-      let userAnswer =
+      while (true) { //player turn
+        let userAnswer =
       getUserAnswer('(H)it or (S)tay?',
         'Invalid, enter "h" or "s")',
         VALID_STAY_HIT);
-      if (userAnswer === 'stay' || userAnswer === 's') {
-        break;
-      } else {
-        dealingCards(mainDeck, playerCards);
-        displayCards('player', playerCards);
+        if (userAnswer === 'stay' || userAnswer === 's') {
+          break;
+        } else {
+          dealingCards(mainDeck, playerCards);
+          displayCards('player', playerCards);
+        }
+        if (isBusted(playerCards)) break;
       }
-      if (isBusted(playerCards)) break;
-    }
 
-    if (isBusted(playerCards)) {
-      prompt('Player busted! Dealer won!');
-      updateScore('dealer', scoreBoard);
+      if (isBusted(playerCards)) {
+        prompt('Player busted! Dealer won!');
+        updateScore('dealer', scoreBoard);
+        break;
+      }
+
+      displayCards('dealer', dealerCards); //showing delears two cards
+
+
+      while (true) { //dealer turn
+
+        if (biggerThanSeventeen(dealerCards) || isBusted(dealerCards)) break;
+        nextStep('Type anything to move next');
+        dealingCards(mainDeck, dealerCards);
+        displayCards('dealer', dealerCards);
+
+      }
+
+      if (isBusted(dealerCards)) {
+        prompt('Dealer busted! Player Won!');
+        updateScore('player', scoreBoard);
+        break;
+      }
+
+      //nobody busted. now need to compare
+      let winner =
+      detectWinner(calculatingCards(playerCards),
+        calculatingCards(dealerCards));
+
+      displayWinner(winner);
+
+      if (winner) {
+        updateScore(winner, scoreBoard);
+      }
+
       break;
-    }
-    
-  displayCards('dealer', dealerCards); //showing delears two cards
-
-
-    while (true) { //dealer turn
-
-      if (biggerThanSeventeen(dealerCards) || isBusted(dealerCards)) break;
-      nextStep('Type anything to move next');
-      dealingCards(mainDeck, dealerCards);
-      displayCards('dealer', dealerCards);
 
     }
 
-    if (isBusted(dealerCards)) {
-      prompt('Dealer busted! Player Won!');
-      updateScore('player', scoreBoard);
-      break;
-    }
-    
-    //nobody busted. now need to compare
-    let winner = detectWinner(calculatingCards(playerCards), calculatingCards(dealerCards));
-    
-    displayWinner(winner);
-    
-    if(winner) {
-    updateScore(winner, scoreBoard);
-    }
-    
-    break;
+    displayScore(scoreBoard);
+
+    displayGrandWinner(scoreBoard);
+
+    nextStep('Please check the score. Type anything to move next');
+
+    if (isWonMatch(scoreBoard)) break;
+
 
   }
- 
- displayScore(scoreBoard);
- 
- displayGrandWinner(scoreBoard);
- 
- nextStep('Please check the score. Type anything to move next');
- 
- if(isWonMatch(scoreBoard)) break;
- 
- 
-}
 
-let playAgainAnswer = getUserAnswer('Do you want to play more?',
+  let playAgainAnswer = getUserAnswer('Do you want to play more?',
     'Invalid, choose "y" or "n"',
     VALID_YES_OR_NO);
 
