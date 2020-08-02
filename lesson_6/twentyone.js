@@ -37,6 +37,57 @@ function shuffle(array) {
   }
 }
 
+
+function dealInitialHands(deck, player, dealer) {
+  // first deal to player
+  dealingCards(deck, player);
+  displayHand('player', player);
+  nextStep('Hit enter to move next');
+
+  // first deal to dealer
+  dealingCards(deck, dealer);
+  displayHand('dealer', dealer);
+  nextStep('Hit enter to move next');
+
+  // second deal to player
+  dealingCards(deck, player);
+  displayHand('player', player);
+
+  // second deal to dealer
+  dealingCards(deck, dealer);
+
+}
+
+function playerTurn(deck, player) {
+
+  while (true) { //player turn
+    let userAnswer =
+      getUserAnswer('(H)it or (S)tay?',
+        'Invalid, enter "h" or "s")',
+        VALID_STAY_HIT);
+    if (userAnswer === 'stay' || userAnswer === 's') {
+      break;
+    } else {
+      dealingCards(deck, player);
+      displayHand('player', player);
+    }
+    if (isBusted(player) ||
+            calculatingCards(player) === MAX_NUMBER) break;
+  }
+}
+
+function dealerTurn(deck, dealer) {
+  while (true) { //dealer turn
+
+    if (biggerThanDealerMin(dealer) || isBusted(dealer)) break;
+    nextStep('Hit enter to move next');
+    dealingCards(deck, dealer);
+    displayHand('dealer', dealer);
+
+  }
+}
+
+
 function dealingCards(deck, array) {
   addingCard(deck, array);
   removingFromDeck(deck);
@@ -50,10 +101,10 @@ function removingFromDeck(deck) {
   deck.shift();
 }
 
-function displayCards(name, array) {
+function displayHand(name, hand) {
   prompt(`${name} has:`);
-  console.log(array);
-  prompt(`A total of: ${calculatingCards(array)}`);
+  console.log(hand);
+  prompt(`A total of: ${calculatingCards(hand)}`);
 }
 
 function getUserAnswer(msg, errorMsg, validArray) {
@@ -77,7 +128,7 @@ function nextStep(msg) {
   readline.question();
 }
 
-function biggerThanSeventeen(array) {
+function biggerThanDealerMin(array) {
   return calculatingCards(array) >= DEALER_MIN;
 }
 
@@ -166,7 +217,8 @@ function isDone(answer) {
 
 while (true) {
 
-  nextStep(`WELCOME TO ${MAX_NUMBER}! who reaches ${WINNING_SCORE} points first will be The Grand Winner!`);
+  nextStep(`WELCOME TO ${MAX_NUMBER}! who reaches ${WINNING_SCORE} points first will be The Grand Winner! Hit enter to move next.`);
+
 
   let scoreBoard = {
     dealer: 0,
@@ -185,37 +237,9 @@ while (true) {
       let playerCards = [];
       let dealerCards = [];
 
-      // first deal to player
-      dealingCards(mainDeck, playerCards);
-      displayCards('player', playerCards);
-      nextStep('type anything to move next');
+      dealInitialHands(mainDeck, playerCards, dealerCards);
 
-      // first deal to dealer
-      dealingCards(mainDeck, dealerCards);
-      displayCards('dealer', dealerCards);
-      nextStep('Type anything to move next');
-
-      // second deal to player
-      dealingCards(mainDeck, playerCards);
-      displayCards('player', playerCards);
-
-      // second deal to dealer
-      dealingCards(mainDeck, dealerCards);
-
-
-      while (true) { //player turn
-        let userAnswer =
-      getUserAnswer('(H)it or (S)tay?',
-        'Invalid, enter "h" or "s")',
-        VALID_STAY_HIT);
-        if (userAnswer === 'stay' || userAnswer === 's') {
-          break;
-        } else {
-          dealingCards(mainDeck, playerCards);
-          displayCards('player', playerCards);
-        }
-        if (isBusted(playerCards)) break;
-      }
+      playerTurn(mainDeck, playerCards);
 
       if (isBusted(playerCards)) {
         prompt('Player busted! Dealer won!');
@@ -223,17 +247,10 @@ while (true) {
         break;
       }
 
-      displayCards('dealer', dealerCards); //showing delears two cards
+      displayHand('dealer', dealerCards); //showing delears two cards
 
 
-      while (true) { //dealer turn
-
-        if (biggerThanSeventeen(dealerCards) || isBusted(dealerCards)) break;
-        nextStep('Type anything to move next');
-        dealingCards(mainDeck, dealerCards);
-        displayCards('dealer', dealerCards);
-
-      }
+      dealerTurn(mainDeck, dealerCards);
 
       if (isBusted(dealerCards)) {
         prompt('Dealer busted! Player Won!');
@@ -260,7 +277,7 @@ while (true) {
 
     displayGrandWinner(scoreBoard);
 
-    nextStep('Please check the score. Type anything to move next');
+    nextStep('Please check the score. Hit enter to move next');
 
     if (isWonMatch(scoreBoard)) break;
 
