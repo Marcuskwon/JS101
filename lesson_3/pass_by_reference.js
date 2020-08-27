@@ -70,3 +70,38 @@ function changeB(object) {
 changeB(objectB);
 
 console.log(objectB);
+
+
+
+
+
+
+let greeting = "Hello";
+const test = str => {
+  str.concat("World");
+  str = str.toLowerCase();
+  return str;
+}
+test(greeting);
+console.log(greeting);
+
+/*
+greeting is assigned to a string 'Hello' on line 1.
+
+On line2, a function 'test' is defined by function expression using arrow function. 
+This function takes str as parameter.
+
+In the function, on line 3, .concat takes an arguement string 'world', and called on the value of str. 
+That reutrns a new string Helloworld.
+
+on line4, str is reassigned to the return value of toLowerCase() called on str.
+
+The function returns str, which is the parameter of the function.
+
+on line 7, a value of greeting is passed to a function as arguement. 
+Meaning that this will not reassign or mutate the variable greeting. - pass by value.
+
+Line 8, console.log method took the arguement greeting, and it prints "Hello". return undefined.
+
+This coding explains pass by value concept.
+*/

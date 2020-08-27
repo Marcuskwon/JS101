@@ -10,7 +10,7 @@ console.log(0.3 + 0.6 === 0.9); // false //because JavaScript uses floating poin
 
 Array.isArray(arr1) true or false
 arr1.concat(arr2) - not mutating
-arr1.join(' ')
+arr1.join(' ') - will return a new string
 arr.sort((a, b) => a - b ) - mutating...so use [...arr].sort((a, b) => a - b )
 ********************************************************
 let nanArray = [NaN];
@@ -25,7 +25,7 @@ obj1.assign({} , obj2) - mutating {} (first)
 let arr1 = [{ first: "value1" }, { second: "value2" }, 3, 4, 5];
 let arr2 = arr1.slice();
 arr2[0].first = 42;
-arr1 => [{ first: 42 }, { second: "value2" }, 3, 4, 5]; call by reference
+arr1 => [{ first: 42 }, { second: "value2" }, 3, 4, 5]; pass by reference
 ********************************************************
 //Question2 what these two(7,8) will log?
 
